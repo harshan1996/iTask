@@ -8,13 +8,11 @@ const Table = ({ data }) => {
         <td>{row[0]}</td>
         <td>{row[1]}</td>
         <td>
-          <div>
-            <img
-              src={`data:image/jpeg;base64,${row[2]}`}
-              alt="Decoded"
-              style={{ height: "200px", width: "300px" }}
-            />
-          </div>
+          <img
+            src={`data:image/jpeg;base64,${row[2]}`}
+            alt="Decoded"
+            style={{ height: "200px", width: "300px" }}
+          />
         </td>
       </tr>
     );
