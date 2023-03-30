@@ -1,0 +1,21 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  background-color: antiquewhite;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: rgb(187, 187, 224);
+}
+
+tr {
+  background-color: rgb(236, 226, 226);
+}
