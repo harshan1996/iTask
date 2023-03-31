@@ -95,8 +95,9 @@ def fetch():
     except Exception as e:
         return {"message": "unknown exception occurred", "status_code": 500}
 
-
 #  This API is used to check the total documents in DB which were inserted from CSV file
+
+
 @app.route("/check_database", methods=["GET"])
 def check_database():
     data_from_db = list(collection.find({}))
