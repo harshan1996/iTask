@@ -62,11 +62,8 @@ This will initiate building the Dockerimage for flask as well as for react as pe
 
 After it is done, go to http://localhost:3000 and you should see the webpage displayed.
 
-[image]("<a href="url"><img src="http://url.to/image.png" align="left" height="48" width="48" ></a>")
-
 <p align="center">
-  <img src="your_relative_path_here" width="350" title="hover text">
-  <img src="your_relative_path_here_number_2_large_name" width="350" alt="accessibility text">
+  <img src="https://github.com/harshan1996/iTask/blob/production/backend/sample.png" width="900" title="UI">
 </p>
 
 ## API documentation
