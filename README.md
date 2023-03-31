@@ -53,7 +53,7 @@ After it is done, go to http://localhost:3000 and you should see the webpage dis
 We have 3 APIs in the flask application.
 
 ### `/upload`
-This will takes the uploaded CSV file upon clicking the `UPLOAD` button and stores the details contained in the CSV file in the MongoDB database. The CSV file is stored in the `uploads/`
+This will takes the uploaded CSV file upon clicking the `UPLOAD` button and stores the details contained in the CSV file in the MongoDB collection. The CSV file is stored in the `uploads/`
 
 ### `/fetch`
 This will get triggered when user selects the `start date` and `end date` and clicks the `Fetch Data And Generate Report` button.
