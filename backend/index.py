@@ -18,44 +18,42 @@ def index():
     return {"message": "success"}
 
 
-@app.route("/upload", methods=["GET", "POST"])
+@app.route("/upload", methods=["POST"])
 def upload():
     if request.method == "POST":
-        if 'file' not in request.files:
-            return {'error': 'No file uploaded', "status_code": 400}
-        else:
-            file = request.files['file']
-            uploaded_filename = file.filename
-
-            if uploaded_filename.endswith("csv"):
-
-                file.save('uploads/' + uploaded_filename)
-                data = pd.read_csv(f"uploads/{uploaded_filename}")
-
-                # convert dataframe to list of dictionaries
-                data_dict = data.to_dict(orient='records')
-
-                # insert data into MongoDB
-                collection.insert_many(data_dict)
-
-                return {"message": "successfully saved", "filename": uploaded_filename, "status_code": 200}
+        try:
+            if 'file' not in request.files:
+                return {"error": "No file uploaded", "status_code": 400}
             else:
-                return {"message": "please upload a CSV file", "status_code": 406}
+                file = request.files['file']
+
+                if file.filename.endswith("csv"):
+                    global uploaded_filename
+                    uploaded_filename = file.filename
+
+                    file.save('uploads/' + uploaded_filename)
+                    data = pd.read_csv(f"uploads/{uploaded_filename}")
+
+                    # convert dataframe to list of dictionaries
+                    data_dict = data.to_dict(orient='records')
+
+                    # insert data into MongoDB
+                    collection.insert_many(data_dict)
+
+                    return {"message": "successfully saved", "filename": uploaded_filename, "status_code": 200}
+                else:
+                    return {"message": "please upload a CSV file", "status_code": 406}
+        except Exception as e:
+            return {"error": "unknown exception occurred", "status_code": 500}
 
 
-@app.route("/fetch", methods=["GET", "POST"])
+@app.route("/fetch", methods=["GET"])
 def fetch():
     try:
         start_date = request.args.get("start_date")
         end_date = request.args.get("end_date")
 
-        files_in_uploads = os.listdir('uploads')
-
-        # Sorting files based on modification time
-        files_in_uploads.sort(key=lambda x: os.path.getmtime(
-            os.path.join('uploads', x)))
-
-        read_csv = pd.read_csv(f'uploads/{files_in_uploads[-1]}')
+        read_csv = pd.read_csv(f'uploads/{uploaded_filename}')
 
         filtered_rows = read_csv.loc[read_csv["timestamp"].between(
             start_date, end_date, inclusive="both")]
@@ -97,9 +95,8 @@ def fetch():
     except Exception as e:
         return {"message": "unknown exception occurred", "status_code": 500}
 
+
 #  This API is used to check the total documents in DB which were inserted from CSV file
-
-
 @app.route("/check_database", methods=["GET"])
 def check_database():
     data_from_db = list(collection.find({}))

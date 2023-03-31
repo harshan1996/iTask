@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clone or download the repository and start by typing the following commands.
 
-## Available Scripts
+## Running Flask Application
 
-In the project directory, you can run:
+In one terminal you can start the python application by `backend/` being your root directory.
 
-### `npm start`
+### Creating virtual environment
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Create a virtual environment and activate it by following the commands (in Linux):
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### `python3 -m venv venv`
 
-### `npm test`
+#### `source venv/bin/activate`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installing dependencies
 
-### `npm run build`
+Run the following command to install the dependencies.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### `pip install -r requirements.txt`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The `config.py` consists of database configurations which needs to be filled. So create your own MongoDB database and collection and modify the variables provided.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Starting the application
 
-### `npm run eject`
+Run the following command to start the application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### `python3 index.py`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+It will open by default in the following URL:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+http://localhost:5005
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Running React Application
 
-## Learn More
+In another terminal, make `frontend/` as your root directory and execute the following commands:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### For installing dependencies
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### `npm install`
 
-### Code Splitting
+### Starting the application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Run the following command to start the create-react-application
 
-### Analyzing the Bundle Size
+#### `npm start`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+It runs the app in the development mode at the following URL:
 
-### Making a Progressive Web App
+http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The `sample.png` is provided in the backend for your reference.
 
-### Advanced Configuration
+## Building Docker Images
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+After the application is running successfully by populating the table as per the user input , go to the root directory where docker-compose.yml file is present and run the following command:
 
-### Deployment
+#### `docker-compose up`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This will initiate building the Dockerimage for flask as well as for react as per the Dockerfile provided in the `frontend/` and `backend/` folders and start the containers automatically. This execution step will take around 5 minutes to finish.
 
-### `npm run build` fails to minify
+After it is done, go to http://localhost:3000 and you should see the webpage displayed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[image]("<a href="url"><img src="http://url.to/image.png" align="left" height="48" width="48" ></a>")
+
+<p align="center">
+  <img src="your_relative_path_here" width="350" title="hover text">
+  <img src="your_relative_path_here_number_2_large_name" width="350" alt="accessibility text">
+</p>
+
+## API documentation
+
+We have 3 APIs in the flask application.
+
+### API name
+
+Upload file
+
+### API endpoint
+
+`/upload`
+
+### API description
+
+This will takes the uploaded CSV file upon clicking the `UPLOAD` button and stores the details contained in the CSV file in the MongoDB database. The CSV file is stored in the `uploads/`
+
+### Request type
+
+`POST`
+
+### Request payload
+
+```
+form data:
+KEY:file
+VALUE:sample.csv
+
+```
+
+### Response payload
+
+```
+{
+  "message": "successfully saved",
+  "filename": uploaded_filename,
+  "status_code": 200
+ }
+```
+
+### API name
+
+Fetch filtered items
+
+### API endpoint
+
+`/fetch`
+
+### API description
+
+This will get triggered when user selects the `start date` and `end date` and clicks the `Fetch Data And Generate Report` button.
+The data is read and filtered from the CSV file as per the timestamps and accordingly images are taken from the `images/` folder. The fetched images are encoded and sent it to the react application. The report.csv file is generated which contains the `items` and the `occurrences` in the given dates.
+
+### Request type
+
+`GET`
+
+### Request payload
+
+```
+params:
+start_date=2021-10-20
+end_date=2021-10-22
+```
+
+### Response payload
+
+```
+{
+    "data": [
+        [
+            "20-10-2021-10-21-17-398092.jpg",
+            "mobile,knife,e-cigarette",
+            "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQEBAQIBAQECAgICAgQDAgICAgUEBAMEBgUGBgYFBgYGBwkIBgcJBwYGCAsICQoKCgoKBggLDAsKDAkKCgr/2wBDAQICAgICAgUDAwUKBwYHCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgr/wAARCAKfAXkDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/..truncated"
+}
+```
+
+### API name
+
+check documents in collection
+
+### API endpoint
+
+`/check_database`
+
+### API description
+
+This API is used to check the documents in the collection.
+
+### Request type
+
+`GET`
