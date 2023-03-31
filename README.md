@@ -44,6 +44,9 @@ After the application is running successfully by populating the table as per the
 This will initiate building the Dockerimage for flask as well as for react as per the Dockerfile provided in the `frontend/` and `backend/` folders and start the containers automatically. This execution step will take around 5 minutes to finish.
 
 After it is done, go to http://localhost:3000 and you should see the webpage displayed.
+<p align="center">
+  <img src="https://github.com/harshan1996/iTask/blob/production/backend/sample.png" width="900">
+</p>
 
 ## API documentation
 
