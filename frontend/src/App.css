@@ -1,0 +1,42 @@
+h3,
+h4 {
+  text-align: center;
+}
+#upload {
+  font-size: larger;
+  cursor: pointer;
+  background-color: rgb(234, 185, 112);
+}
+
+#upload:hover {
+  background-color: orange;
+}
+
+div {
+  text-align: center;
+}
+#fetch-data {
+  background-color: #86d4ee;
+}
+
+#fetch-data:hover {
+  background-color: #05b8f3;
+  cursor: pointer;
+}
+
+#success,
+#failure,
+#empty {
+  color: white;
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: bolder;
+}
+
+h3.file-input {
+  background-color: bisque;
+  display: inline;
+}
+h4.file-format {
+  opacity: 0.5;
+}
